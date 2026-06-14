@@ -83,6 +83,24 @@ async def get_active_members_with_users(
     return list(result.all())
 
 
+async def get_all_members_with_users(
+    db: AsyncSession,
+    group_id: UUID,
+) -> list[tuple[GroupMember, User]]:
+    """
+    Returns ALL members (active + who have left) with their user info.
+    Used during CSV import to detect ghost members and fuzzy-match historical names.
+    """
+    result = await db.execute(
+        select(GroupMember, User)
+        .join(User, GroupMember.user_id == User.id)
+        .where(GroupMember.group_id == group_id)
+        .order_by(GroupMember.joined_at)
+    )
+    return list(result.all())
+
+
+
 async def get_user_groups_with_membership(
     db: AsyncSession,
     user_id: UUID,

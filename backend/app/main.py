@@ -58,7 +58,7 @@ async def scalar_docs():
 # ── ROUTERS ──────────────────────────────────────────────────────
 # Each router handles a specific feature area.
 # New routers will be added here as we build each section.
-from app.routers import auth, users, groups, invitations, expenses, settlements
+from app.routers import auth, users, groups, invitations, expenses, settlements, imports, reports
 
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
@@ -66,5 +66,8 @@ app.include_router(groups.router, prefix="/groups", tags=["Groups"])
 app.include_router(invitations.router, tags=["Invitations"])
 app.include_router(expenses.router, tags=["Expenses & Balances"])
 app.include_router(settlements.router, tags=["Settlements"])
+app.include_router(imports.router, tags=["CSV Import"])
+app.include_router(reports.router, tags=["Reports"])
+
 
 

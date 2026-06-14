@@ -1,0 +1,182 @@
+# ================================================================
+# Splitly — Monorepo .gitignore
+# Covers: Python (uv) backend + React (npm) frontend
+# ================================================================
+
+
+# ----------------------------------------------------------------
+# PROJECT-SPECIFIC EXCLUSIONS
+# ----------------------------------------------------------------
+AI_USAGE.md
+Expenses Export.csv
+
+
+# ----------------------------------------------------------------
+# ENVIRONMENT & SECRETS — Never commit these
+# ----------------------------------------------------------------
+.env
+.env.local
+.env.production
+.env.staging
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# .env.example files ARE committed (they contain no real secrets)
+# !.env.example
+# !backend/.env.example
+# !frontend/.env.example
+
+
+# ----------------------------------------------------------------
+# PYTHON / UV / BACKEND
+# ----------------------------------------------------------------
+
+# Virtual environment created by uv
+.venv/
+venv/
+env/
+
+# Python bytecode (auto-generated, not needed in version control)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Python distribution / packaging artifacts
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+*.whl
+
+# uv lock file — commit this so installs are reproducible
+# If you want to exclude it, uncomment the line below:
+# uv.lock
+
+# Test output and coverage reports
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+coverage.json
+htmlcov/
+
+# Type checker caches
+.mypy_cache/
+.pyright/
+
+# Linter caches
+.ruff_cache/
+
+# IPython / Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# ----------------------------------------------------------------
+# NODE / NPM / FRONTEND
+# ----------------------------------------------------------------
+
+# Dependencies folder (restored via npm install)
+node_modules/
+frontend/node_modules/
+
+# Build output (generated, not source)
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/out/
+
+# Vite internal cache
+frontend/.vite/
+
+# TypeScript build info
+*.tsbuildinfo
+frontend/*.tsbuildinfo
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+
+# ----------------------------------------------------------------
+# DOCKER
+# ----------------------------------------------------------------
+# Keep docker-compose.yml and Dockerfile committed
+# Only ignore local override files that have personal/machine-specific settings
+docker-compose.override.yml
+
+
+# ----------------------------------------------------------------
+# IDE & EDITOR FILES
+# ----------------------------------------------------------------
+
+# VS Code workspace settings (personal, not shared)
+.vscode/
+!.vscode/extensions.json    # This one is useful to share
+
+# JetBrains IDEs (PyCharm, WebStorm, etc.)
+.idea/
+*.iml
+
+# Vim / Neovim swap files
+*.swp
+*.swo
+*~
+
+# Emacs backup files
+\#*\#
+.\#*
+
+
+# ----------------------------------------------------------------
+# OPERATING SYSTEM FILES
+# ----------------------------------------------------------------
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# ----------------------------------------------------------------
+# LOGS & TEMPORARY FILES
+# ----------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.bak
+*.orig
+*.swp
+.cache/
+tmp/
+temp/
+
+
+# ----------------------------------------------------------------
+# RAILWAY / VERCEL DEPLOYMENT ARTIFACTS
+# ----------------------------------------------------------------
+# Vercel output
+.vercel/
+
+# Railway — no local artifacts to ignore typically

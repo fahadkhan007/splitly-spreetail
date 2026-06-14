@@ -8,6 +8,8 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from scalar_fastapi import get_scalar_api_reference
 
 from app.config import settings
 
@@ -17,6 +19,8 @@ app = FastAPI(
     title="Splitly API",
     description="Shared expenses application — backend API",
     version="1.0.0",
+    docs_url=None,     # disable default Swagger UI
+    redoc_url=None,    # disable default ReDoc UI
 )
 
 
@@ -41,12 +45,26 @@ async def health_check():
 @app.get("/")
 async def get_app():
     return {"message": "Splitly API is running"}
-    
+
+
+# ── SCALAR DOCS ──────────────────────────────────────────────
+# Beautiful API reference UI — visit http://localhost:8000/scalar
+@app.get("/scalar", include_in_schema=False, response_class=HTMLResponse)
+async def scalar_docs():
+    return get_scalar_api_reference(
+        openapi_url="/openapi.json",
+        title="Splitly API",
+    )
 # ── ROUTERS ──────────────────────────────────────────────────────
 # Each router handles a specific feature area.
 # New routers will be added here as we build each section.
-from app.routers import auth, users
+from app.routers import auth, users, groups, invitations, expenses, settlements
 
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
+app.include_router(groups.router, prefix="/groups", tags=["Groups"])
+app.include_router(invitations.router, tags=["Invitations"])
+app.include_router(expenses.router, tags=["Expenses & Balances"])
+app.include_router(settlements.router, tags=["Settlements"])
+
 

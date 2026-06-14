@@ -12,6 +12,8 @@ class RegisterRequest(BaseModel):
     email: EmailStr
     display_name: str
     password: str
+    # Optional: included when the user registers via a group invitation link
+    invite_token: str | None = None
 
     @field_validator("password")
     def password_long_enough(cls, value):

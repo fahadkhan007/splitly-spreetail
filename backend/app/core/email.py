@@ -32,7 +32,7 @@ def send_verification_email(to_email: str, verification_link: str) -> None:
 
     resend.api_key = settings.RESEND_API_KEY
     resend.Emails.send({
-        "from": "Splitly <noreply@splitly.app>",
+        "from": "Splitly <noreply@contact.korixlive.app>",
         "to": [to_email],
         "subject": "Verify your Splitly account",
         "html": f"""

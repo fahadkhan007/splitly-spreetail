@@ -31,6 +31,7 @@ async def register_user(
     email: str,
     display_name: str,
     password: str,
+    invite_token: str | None = None,
 ) -> User:
     """
     Registers a new user.
@@ -40,6 +41,7 @@ async def register_user(
       2. Hash the password
       3. Save the user to the database (is_verified=False)
       4. Send a verification email with a link
+      5. If an invite_token was provided, add the user to that group automatically
     """
     # Step 1: Reject duplicate emails
     existing_user = await get_user_by_email(db, email)
@@ -56,6 +58,11 @@ async def register_user(
     token = create_email_verification_token(email)
     verification_link = f"{settings.FRONTEND_URL}/verify-email?token={token}"
     send_verification_email(email, verification_link)
+
+    # Step 5: If the user registered via a group invite link, add them to the group
+    if invite_token:
+        from app.services.invitation_service import accept_invite_on_registration
+        await accept_invite_on_registration(db, token=invite_token, new_user=user)
 
     return user
 

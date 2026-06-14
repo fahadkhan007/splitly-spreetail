@@ -36,7 +36,13 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
     A verification email is sent automatically after registration.
     The user can log in immediately but some features require email verification.
     """
-    await register_user(db, email=body.email, display_name=body.display_name, password=body.password)
+    await register_user(
+        db,
+        email=body.email,
+        display_name=body.display_name,
+        password=body.password,
+        invite_token=body.invite_token,
+    )
     return {"message": "Account created successfully. Please check your email to verify your account."}
 
 

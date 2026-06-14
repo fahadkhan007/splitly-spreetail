@@ -101,7 +101,17 @@ GROUP_NAME = "Testing Group"
 
 
 async def seed():
-    engine = create_async_engine(settings.ASYNC_DATABASE_URL, echo=False)
+    # Build the async URL directly from DATABASE_URL env var so that
+    # the local .env file cannot override it when targeting Railway.
+    import os
+    db_url = os.environ.get("DATABASE_URL", settings.ASYNC_DATABASE_URL).strip()
+    async_url = (
+        db_url
+        .replace("postgresql://", "postgresql+asyncpg://", 1)
+        .replace("postgres://", "postgresql+asyncpg://", 1)
+    )
+    print(f"  [INFO] Connecting to: {async_url[:40]}...")
+    engine = create_async_engine(async_url, echo=False)
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
     async with async_session() as db:

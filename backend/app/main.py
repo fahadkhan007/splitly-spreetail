@@ -29,7 +29,13 @@ app = FastAPI(
 # In production, FRONTEND_URL will be the Vercel deployment URL.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL],
+    allow_origins=[
+        settings.FRONTEND_URL,
+        "https://splitly-spreetail.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173"
+    ],
     allow_credentials=True,     # Needed for HttpOnly cookies (refresh tokens)
     allow_methods=["*"],        # Allow GET, POST, PUT, DELETE, etc.
     allow_headers=["*"],        # Allow Authorization header and others

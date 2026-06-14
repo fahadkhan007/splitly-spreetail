@@ -32,9 +32,7 @@ app.add_middleware(
 )
 
 
-# ── HEALTH CHECK ─────────────────────────────────────────────────
-# A simple route to confirm the server is running.
-# Visit http://localhost:8000/health in your browser to test.
+
 @app.get("/health")
 async def health_check():
     return {"status": "ok", "message": "Splitly API is running"}
@@ -45,8 +43,10 @@ async def get_app():
     return {"message": "Splitly API is running"}
     
 # ── ROUTERS ──────────────────────────────────────────────────────
-# Routers will be added here as we build each section.
-# Example (uncomment when ready):
-# from app.routers import auth, groups, expenses
-# app.include_router(auth.router, prefix="/auth", tags=["auth"])
-# app.include_router(groups.router, prefix="/groups", tags=["groups"])
+# Each router handles a specific feature area.
+# New routers will be added here as we build each section.
+from app.routers import auth, users
+
+app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+app.include_router(users.router, prefix="/users", tags=["Users"])
+

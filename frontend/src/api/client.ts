@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
 
-export const API_URL = 'http://localhost:8000';
+export const API_URL = 'https://splitly-spreetail.up.railway.app';
 
 export const apiClient = axios.create({
   baseURL: API_URL,
